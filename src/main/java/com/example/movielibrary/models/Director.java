@@ -1,9 +1,15 @@
 package com.example.movielibrary.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "directors")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Director {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,22 +19,4 @@ public class Director {
     @Column(name = "director_name")
     private String name;
 
-    public Director() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
