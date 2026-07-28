@@ -31,9 +31,15 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public Movie getMovieByTitle(String title) {
+        return movieRepository.findByTitle(title)
+                .orElseThrow(() -> new EntityNotFoundException("Movie not found with title: " + title));
+    }
+
+    @Override
     public Movie createMovie(Movie movie) {
         if (movieRepository.existsByTitle(movie.getTitle())) {
-            throw new IllegalArgumentException("Movie with that title '" + movie.getTitle() + "' already exists!");
+            throw new DuplicateEntityException("Movie with that title '" + movie.getTitle() + "' already exists!");
         }
         Movie savedMovie = movieRepository.save(movie);
 
