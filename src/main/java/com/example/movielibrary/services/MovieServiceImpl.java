@@ -1,5 +1,7 @@
 package com.example.movielibrary.services;
 
+import com.example.movielibrary.exceptions.DuplicateEntityException;
+import com.example.movielibrary.exceptions.EntityNotFoundException;
 import com.example.movielibrary.models.Movie;
 import com.example.movielibrary.repositories.MovieRepository;
 import org.springframework.stereotype.Service;
@@ -10,9 +12,11 @@ import java.util.List;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+    private final MovieEnrichmentService movieEnrichmentService;
 
-    public MovieServiceImpl(MovieRepository movieRepository) {
+    public MovieServiceImpl(MovieRepository movieRepository, MovieEnrichmentService movieEnrichmentService) {
         this.movieRepository = movieRepository;
+        this.movieEnrichmentService = movieEnrichmentService;
     }
 
     @Override
@@ -23,21 +27,38 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public Movie getMovieById(int id) {
         return movieRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Movie not found with id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Movie not found with id: " + id));
     }
 
     @Override
     public Movie createMovie(Movie movie) {
-        return movieRepository.save(movie);
+        if (movieRepository.existsByTitle(movie.getTitle())) {
+            throw new IllegalArgumentException("Movie with that title '" + movie.getTitle() + "' already exists!");
+        }
+        Movie savedMovie = movieRepository.save(movie);
+
+        movieEnrichmentService.enrichMovieRating(savedMovie.getId(), savedMovie.getTitle());
+
+        return savedMovie;
     }
 
     @Override
     public Movie updateMovie(int id, Movie movieDetails) {
         Movie movie = getMovieById(id);
 
+        boolean isTitleChanged = !movie.getTitle().equalsIgnoreCase(movieDetails.getTitle());
+
+        if (isTitleChanged && movieRepository.existsByTitle(movieDetails.getTitle())) {
+            throw new DuplicateEntityException("Movie with that title already exists: " + movieDetails.getTitle());
+        }
+
         movie.setTitle(movieDetails.getTitle());
         movie.setDirector(movieDetails.getDirector());
         movie.setReleaseYear(movieDetails.getReleaseYear());
+
+        if (isTitleChanged) {
+            movieEnrichmentService.enrichMovieRating(movie.getId(), movie.getTitle());
+        }
 
         return movieRepository.save(movie);
     }
