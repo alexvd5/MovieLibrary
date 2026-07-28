@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "movies")
 @Getter
@@ -23,9 +21,11 @@ public class Movie {
 
     @ManyToOne
     @JoinColumn(name = "director_id")
-    private Director Director;
+    private Director director;
 
     @Column(name = "release_year")
-    private LocalDateTime releaseYear;
+    private int releaseYear;
 
+    @Column(name = "rating")
+    private Double rating;
 }
