@@ -1,6 +1,8 @@
 package com.example.movielibrary.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +19,8 @@ public class Movie {
     private int id;
 
     @Column(name = "title")
+    @NotBlank(message = "Title is required and cannot be empty")
+    @Size(min = 1, max = 100, message = "Title must be between 1 and 100 characters")
     private String title;
 
     @ManyToOne
