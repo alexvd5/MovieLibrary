@@ -6,7 +6,6 @@ import com.example.movielibrary.models.Director;
 import com.example.movielibrary.models.Movie;
 import com.example.movielibrary.repositories.MovieRepository;
 import com.example.movielibrary.services.MovieEnrichmentService;
-import com.example.movielibrary.services.MovieService;
 import com.example.movielibrary.services.MovieServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,8 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import javax.swing.text.html.Option;
 
 import java.util.Optional;
 
