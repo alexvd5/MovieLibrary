@@ -38,9 +38,15 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie createMovie(Movie movie) {
+
+        if (movie.getTitle() == null || movie.getTitle().isEmpty()) {
+            throw new IllegalArgumentException("Movie title cannot be empty!");
+        }
+
         if (movieRepository.existsByTitle(movie.getTitle())) {
             throw new DuplicateEntityException("Movie with that title '" + movie.getTitle() + "' already exists!");
         }
+
         Movie savedMovie = movieRepository.save(movie);
 
         movieEnrichmentService.enrichMovieRating(savedMovie.getId(), savedMovie.getTitle());
