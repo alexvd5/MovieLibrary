@@ -1,7 +1,7 @@
-package com.example.movielibrary;
+package com.example.movielibrary.services;
+import com.example.movielibrary.enums.Role;
 import com.example.movielibrary.models.User;
 import com.example.movielibrary.repositories.UserRepository;
-import com.example.movielibrary.services.CustomUserDetailsService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,15 +27,17 @@ class CustomUserDetailsServiceTest {
     @Test
     void loadUserByUsername_WhenUserExists_ReturnsUserDetails() {
         User user = new User();
-        user.setUsername("john");
-        user.setPassword("password123");
+        user.setUsername("admin");
+        user.setPassword("admin123");
 
-        when(userRepository.findByUsername("john")).thenReturn(Optional.of(user));
+        user.setRole(Role.ROLE_USER);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername("john");
+        when(userRepository.findByUsername("admin")).thenReturn(Optional.of(user));
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername("admin");
 
         assertNotNull(userDetails);
-        assertEquals("john", userDetails.getUsername());
+        assertEquals("admin", userDetails.getUsername());
     }
 
     @Test

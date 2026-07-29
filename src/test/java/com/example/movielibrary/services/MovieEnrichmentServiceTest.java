@@ -1,9 +1,8 @@
-package com.example.movielibrary;
+package com.example.movielibrary.services;
 
 import com.example.movielibrary.models.Movie;
 import com.example.movielibrary.models.OmdbResponseDto;
 import com.example.movielibrary.repositories.MovieRepository;
-import com.example.movielibrary.services.MovieEnrichmentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

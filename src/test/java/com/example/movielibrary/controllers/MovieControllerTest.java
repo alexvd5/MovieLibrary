@@ -1,4 +1,4 @@
-package com.example.movielibrary;
+package com.example.movielibrary.controllers;
 
 import com.example.movielibrary.models.Movie;
 import com.example.movielibrary.services.MovieService;

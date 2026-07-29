@@ -1,12 +1,10 @@
-package com.example.movielibrary;
+package com.example.movielibrary.services;
 
 import com.example.movielibrary.exceptions.DuplicateEntityException;
 import com.example.movielibrary.exceptions.EntityNotFoundException;
 import com.example.movielibrary.models.Director;
 import com.example.movielibrary.models.Movie;
 import com.example.movielibrary.repositories.MovieRepository;
-import com.example.movielibrary.services.MovieEnrichmentService;
-import com.example.movielibrary.services.MovieServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
