@@ -27,6 +27,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/movies/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/movies/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/movies/**").hasRole("ADMIN")
+                        .requestMatchers(
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()
 
                         .anyRequest().authenticated()
                 )
